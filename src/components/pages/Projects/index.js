@@ -4,6 +4,7 @@ import styles from './Projects.module.css'
 import Container from '../layout/Container'
 import LinkButton from "../../Buttons/LinkButton"
 import ProjectCard from "./ProjectCard"
+import Loading from "../../Loading"
 
 import { useEffect, useState } from "react"
 
@@ -11,6 +12,8 @@ import { useEffect, useState } from "react"
 function Projects(){
 
     const [projects, setProjects] = useState([])
+    const [removeLoading, setRemoveLoading] = useState(false)
+    const [ projecMessage, setProjectMessage  ] = useState('')
 
 
     const location = useLocation()
@@ -20,22 +23,45 @@ function Projects(){
     }
 
     useEffect(() => {
-        fetch('http://localhost:5000/projects', {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application-json',
+        
+        setTimeout (() => {
+            fetch('http://localhost:5000/projects', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application-json',
+    
+                },
+            })
+            .then((resp) => resp.json())
+            .then((data) => {
+                console.log(data)
+                setProjects(data)
+                setRemoveLoading(true)
+            })
+            .catch((err) => 
+            console.log(err))
+        }, 300)
 
-            },
-        })
-        .then((resp) => resp.json())
-        .then((data) => {
-            console.log(data)
-            setProjects(data)
-        })
-        .catch((err) => 
-        console.log(err))
     }, [])
 
+
+           function removeProject(id){
+               fetch(`http://localhost:5000/projects/${id}`, {
+                   method: 'DELETE',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+               })
+               .then((resp) => resp.json())
+               .then((data) => {
+                   setProjects(projects.filter((project) => project.id !== id))
+                   //Message
+                   setProjectMessage('Your project was deleted successfully!')
+               })
+               .catch((err) => console.log(err))
+           }
+      
+    
 
     return (
         <div className={styles.project_container} >
@@ -44,6 +70,7 @@ function Projects(){
                     <LinkButton to="/newproject" text="Create a Project" />
             </div>
            {message && <Message type="success" msg={message} />}
+           {projecMessage && <Message type="success" msg={projecMessage} />}
 
             <Container customclass="start">
 
@@ -55,10 +82,14 @@ function Projects(){
                     budget={project.budget}
                     category={project.category.name}
                     key={project.id}
+                    handleRemove={removeProject}
                    
                    />)}
                    
-
+                    { !removeLoading && <Loading /> }
+                    {removeLoading && projects.length == 0 && (
+                        <p>Oops, you don't registred any projecs yet!</p>
+                    ) }
             </Container>
 
         </div>
