@@ -1,6 +1,6 @@
 import styles from './NewProject.module.css'
-import ProjectForm from '../Project/ProjectForm'
-import { useNavigate, useHistory   } from 'react-router-dom'
+import ProjectForm from '../../../components/pages/Projects/ProjectForm'
+import { useNavigate } from 'react-router-dom'
 
 
 function NewProject(){
@@ -25,6 +25,7 @@ function NewProject(){
             console.log(data)
             //Redirect
             navigate('/projects', {message: 'Project was create successfully!'})
+           
         })
         .catch((err) => console.log(err))
     }
