@@ -1,5 +1,39 @@
 {
-  "projects": [],
+  "projects": [
+    {
+      "name": "Make deploy this project to GCP 1",
+      "budget": "4552",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 1
+    },
+    {
+      "name": "Fazer Deploy ReactJS",
+      "budget": "500",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 2
+    },
+    {
+      "name": "Implantar AWS 2",
+      "budget": "5000",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 3
+    }
+  ],
   "categories": [
     {
       "id": 1,
@@ -16,10 +50,6 @@
     {
       "id": 4,
       "name": "Planning"
-    },
-    {
-      "id": 55,
-      "name": "Test tvm"
     }
   ]
 }
