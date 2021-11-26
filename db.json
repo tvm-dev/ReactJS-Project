@@ -1,11 +1,11 @@
 {
   "projects": [
     {
-      "name": "Make deploy this project to GCP 1",
-      "budget": "4552",
+      "name": "Project Updated",
+      "budget": "1000",
       "category": {
-        "id": "1",
-        "name": "Infra"
+        "id": "2",
+        "name": "Design"
       },
       "cost": 0,
       "services": [],

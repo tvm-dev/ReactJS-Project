@@ -72,7 +72,7 @@ function Project(){
 
     }
 
-    function toogleServiceForm(){
+    function toggleServiceForm(){
         setShowServiceForm(!showServiceForm)
 
     }
@@ -119,13 +119,12 @@ function Project(){
                    <div className={styles.service_form_container}>
                        <h2>Add a new service:</h2>
 
-                       <button className={ styles.btn } onClick={toogleServiceForm}>
-                        {!showServiceForm ? 'Add' : 'Close'}
+                       <button className={ styles.btn } onClick={toggleServiceForm}>
+                        {!showServiceForm ? 'Add Service' : 'Close'}
                     </button>
                             
                             <div className={styles.project_info}>
-                    {showServiceForm && (
-                        <ServiceForm
+                    {showServiceForm && (<ServiceForm
                         handleSubmit={createService}
                         btnText="Add service"
                         projectData={project}
