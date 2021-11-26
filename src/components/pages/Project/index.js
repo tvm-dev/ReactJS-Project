@@ -1,3 +1,4 @@
+import { parse, v4 as uuidv4 } from 'uuid'
 import styles from './Project.module.css';
 //import .env from '/.env';
 import Loading from '../../Loading'
@@ -6,13 +7,16 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import ProjectForm from '../../pages/Projects/ProjectForm'
 import Message from '../../Messages'
-import ServiceForm from '../../Services/ServiceForm';
+import ServiceForm from '../../Services/ServiceForm'
+import ServiceCard from '../../Services/ServiceCard'
+
 
 
 function Project(){
 
     const { id } = useParams()
     const [ project, setProject ] = useState([])
+    const [ services, setServices ] = useState([])
     const [ showProjectForm, setShowProjectForm ] = useState(false)
     const [ showServiceForm, setShowServiceForm ] = useState(false)
     const [message, setMessage ] = useState()
@@ -29,7 +33,8 @@ function Project(){
     
             }).then(resp => resp.json())
             .then((data) => {
-            setProject(data)  
+            setProject(data)
+            setServices(data.services)  
             })
             .catch((err) => console.log)
         }, 300)
@@ -64,8 +69,50 @@ function Project(){
      }
          
     function createService(){
+        setMessage('')
+        //to get last service:
+        const lastService = project.services[project.services.length - 1]
+        //create variable to add to each service added:
+        lastService.id = uuidv4()
+        //get the last service cost:
+        const lastServiceCost = lastService.cost
+        const newCost = parseFloat(project.cost) + parseFloat(lastServiceCost)
+
+        //Maximum value validation:
+        if (newCost > parseFloat(project.budget)) {
+            setMessage('Budget exceeded! Check the service value.')
+            setType('error')
+            //Delete service
+            project.services.pop()
+             return false
+        }
+        //add service with cost down of budget: OK
+        project.cost = newCost
+
+        //Update project:
+
+        fetch(`http://localhost:5000/projects/${project.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(project),
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+            //show services
+              console.log(data)
+    })
+        .catch((err) => console.log(err))
+
+
         
     } 
+
+    function removeService(){
+        //remove service from list services:
+         
+    }
 
     function toggleProjectForm(){
         setShowProjectForm(!showProjectForm)
@@ -99,7 +146,7 @@ function Project(){
 
                         <p><span>Category: </span> {project.category.name}</p>
                         <p><span>Total Budget: </span> $ {project.budget}</p>
-                        <p><span>Total used: </span> {project.cost}</p>
+                        <p><span>Total used: </span> $ {project.cost}</p>
                          </div>
                          ) : (
                              <div className={styles.project_info}>
@@ -137,7 +184,24 @@ function Project(){
 
                        <h2>Services</h2>         
                        <Container customClass="start"> 
-                            <p>services items</p>
+                            { services.length > 0 &&
+                            services.map((service) => (
+                                <ServiceCard 
+                                id={service.id}
+                                name={service.name}
+                                description={service.description}
+                                key={service.id}
+                                handleRemove={removeService}
+
+                                />
+                            ))
+                            
+                            }    
+                              { services.length === 0 &&
+                            <p>There isn't services registered</p> }
+
+
+
                         </Container>
 
             </Container>

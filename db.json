@@ -1,14 +1,45 @@
 {
   "projects": [
     {
-      "name": "Project Updated",
+      "name": "Project Updated 2",
       "budget": "1000",
       "category": {
         "id": "2",
         "name": "Design"
       },
-      "cost": 0,
-      "services": [],
+      "cost": 1000,
+      "services": [
+        {
+          "name": "new service",
+          "cost": "444",
+          "description": "test here",
+          "id": "24f29482-3b05-47b7-8583-109a47ba2e9c"
+        },
+        {
+          "name": "new service",
+          "cost": "444",
+          "description": "test here",
+          "id": "24f29482-3b05-47b7-8583-109a47ba2e9c"
+        },
+        {
+          "name": "new service",
+          "cost": "4",
+          "description": "test here",
+          "id": "b6be3eee-73e9-4482-a4ea-069efb39260b"
+        },
+        {
+          "name": "new service",
+          "cost": "8",
+          "description": "test here",
+          "id": "58f3ae55-c6bf-4f9a-a68a-2145aa20688f"
+        },
+        {
+          "name": "new service",
+          "cost": "100",
+          "description": "test here",
+          "id": "51663441-fc3d-4ec9-aed9-d23c01abed1d"
+        }
+      ],
       "id": 1
     },
     {
@@ -18,8 +49,15 @@
         "id": "1",
         "name": "Infra"
       },
-      "cost": 0,
-      "services": [],
+      "cost": 50,
+      "services": [
+        {
+          "name": "Buy domain",
+          "cost": "50",
+          "description": "Buy new domains in Google Domains",
+          "id": "9eab195d-fae0-43e9-b9cb-2638adae44a6"
+        }
+      ],
       "id": 2
     },
     {
